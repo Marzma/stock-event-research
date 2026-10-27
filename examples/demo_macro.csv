@@ -1,0 +1,3 @@
+event_id,date,title,change_bps,source_url
+demo-event-1,2025-01-15,Fictional policy event,-25,https://example.com/fictional-policy
+demo-event-2,2025-03-31,Fictional late event,-25,https://example.com/fictional-policy-2

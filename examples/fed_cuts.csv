@@ -1,0 +1,6 @@
+event_id,date,title,change_bps,source_url
+fed-2024-11-07,2024-11-07,Fed target rate cut,-25,https://www.federalreserve.gov/newsevents/pressreleases/monetary20241107a.htm
+fed-2024-12-18,2024-12-18,Fed target rate cut,-25,https://www.federalreserve.gov/newsevents/pressreleases/monetary20241218a.htm
+fed-2025-09-17,2025-09-17,Fed target rate cut,-25,https://www.federalreserve.gov/newsevents/pressreleases/monetary20250917a.htm
+fed-2025-10-29,2025-10-29,Fed target rate cut,-25,https://www.federalreserve.gov/newsevents/pressreleases/monetary20251029a.htm
+fed-2025-12-10,2025-12-10,Fed target rate cut,-25,https://www.federalreserve.gov/newsevents/pressreleases/monetary20251210a.htm

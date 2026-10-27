@@ -1,0 +1,14 @@
+{
+  "tickers": ["NBIS", "AAPL", "MSFT", "NVDA"],
+  "benchmark": "QQQ",
+  "price_provider": "yfinance",
+  "start": "2024-10-21",
+  "return_basis": "adjusted",
+  "threshold_pct": 5,
+  "direction": "both",
+  "horizons": [0, 1, 5, 20],
+  "macro_events": "fed_cuts.csv",
+  "news_provider": "alpha_vantage",
+  "max_news_requests": 4,
+  "market": {"timezone": "America/New_York", "close_time": "16:00:00"}
+}

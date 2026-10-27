@@ -1,0 +1,23 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "stock-event-research"
+version = "0.1.0"
+description = "Reproducible SQL-based stock event studies with evidence-aware news matching"
+requires-python = ">=3.10"
+dependencies = []
+
+[project.optional-dependencies]
+online = ["yfinance>=0.2.54,<2"]
+mysql = ["PyMySQL>=1.1,<2"]
+
+[project.scripts]
+stock-research = "stock_event_research.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+stock_event_research = ["*.sql", "*.html", "*.js", "*.css"]

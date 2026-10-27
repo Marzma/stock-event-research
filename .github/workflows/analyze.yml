@@ -1,0 +1,52 @@
+name: Analyze watchlist
+on:
+  workflow_dispatch:
+    inputs:
+      config:
+        description: Tracked JSON configuration path
+        required: true
+        default: examples/watchlist.json
+        type: string
+  schedule:
+    - cron: '17 2 * * 2-6'
+permissions:
+  contents: read
+concurrency:
+  group: stock-research-analysis
+  cancel-in-progress: false
+jobs:
+  analyze:
+    # Set repository variable ENABLE_SCHEDULE=true to opt in to daily downloads.
+    if: github.event_name == 'workflow_dispatch' || vars.ENABLE_SCHEDULE == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: '3.11'
+      - run: python -m pip install -e '.[online]'
+      - name: Validate config path and run
+        env:
+          CONFIG_PATH: ${{ inputs.config || 'examples/watchlist.json' }}
+          ALPHAVANTAGE_API_KEY: ${{ secrets.ALPHAVANTAGE_API_KEY }}
+        run: |
+          python - <<'PY'
+          import os
+          from pathlib import Path
+          from stock_event_research.cli import run
+          path = Path(os.environ['CONFIG_PATH']).resolve()
+          root = Path.cwd().resolve()
+          if not path.is_relative_to(root / 'examples') or path.suffix != '.json':
+              raise SystemExit('Configuration must be a JSON file inside examples/')
+          run(path, 'artifacts/watchlist')
+          PY
+      - uses: actions/upload-artifact@v7
+        with:
+          name: watchlist-research
+          path: |
+            artifacts/watchlist/index.html
+            artifacts/watchlist/report.md
+            artifacts/watchlist/*.csv
+            artifacts/watchlist/results.json
+          retention-days: 7

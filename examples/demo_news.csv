@@ -1,0 +1,4 @@
+symbol,published_at,title,url,publisher,evidence_status
+DEMO,2025-01-15T13:00:00+00:00,Fictional DEMO customer announcement,https://example.com/fictional-demo-customer,Synthetic fixture,unreviewed_candidate
+DEMO,2025-02-03T22:00:00+00:00,Fictional DEMO financing announcement after close,https://example.com/fictional-demo-financing,Synthetic fixture,unreviewed_candidate
+ALT,2025-01-15T12:30:00+00:00,Fictional ALT earnings announcement,https://example.com/fictional-alt-earnings,Synthetic fixture,unreviewed_candidate

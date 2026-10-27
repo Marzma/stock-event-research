@@ -1,0 +1,17 @@
+{
+  "synthetic": true,
+  "tickers": ["DEMO", "ALT"],
+  "benchmark": "BENCH",
+  "price_provider": "csv",
+  "price_files": {"DEMO": "demo_prices.csv", "ALT": "alt_prices.csv", "BENCH": "benchmark_prices.csv"},
+  "start": "2025-01-02",
+  "end_exclusive": "2025-05-01",
+  "return_basis": "price",
+  "threshold_pct": 5,
+  "direction": "both",
+  "horizons": [0, 1, 5, 20],
+  "macro_events": "demo_macro.csv",
+  "news_provider": "csv",
+  "news_file": "demo_news.csv",
+  "market": {"timezone": "America/New_York", "close_time": "16:00:00"}
+}
