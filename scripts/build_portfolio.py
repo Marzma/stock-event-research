@@ -1,10 +1,11 @@
-"""Build a public portfolio using only the explicitly synthetic demo."""
+"""Publish the curated NBIS case study, without databases or private work files."""
 import argparse
 import json
+import re
 import shutil
 from pathlib import Path
 
-from stock_event_research.cli import run
+FILES = ('index.html', 'rally_dates.csv', 'rate_cut_windows.csv', 'event_register.csv')
 
 
 def build(output):
@@ -12,23 +13,19 @@ def build(output):
     output = Path(output).resolve()
     if output == root or root.is_relative_to(output):
         raise ValueError('Output must be a dedicated generated directory')
-    config = root / 'examples/demo.json'
-    settings = json.loads(config.read_text())
-    if settings.get('synthetic') is not True or settings.get('price_provider') != 'csv':
-        raise ValueError('Public portfolio must use the synthetic offline demo')
-    if settings.get('tickers') != ['DEMO', 'ALT'] or settings.get('benchmark') != 'BENCH':
-        raise ValueError('Public portfolio ticker allowlist does not match')
-    # Build outside the published directory: do not publish the SQLite DB or cache.
-    staging = root / 'artifacts/portfolio-build'
-    result = run(config, staging)
-    if not result['synthetic']:
-        raise ValueError('Synthetic provenance marker missing')
+    source = root / 'site'
+    html = (source / 'index.html').read_text()
+    match = re.search(r'window.RESEARCH_DATA = (.*?);\s*\n', html)
+    if not match:
+        raise ValueError('NBIS research snapshot missing')
+    data = json.loads(match.group(1))
+    if len(data['rallies']) != 118 or len(data['windows']) != 20 or len(data['prices']) != 505:
+        raise ValueError('Unexpected NBIS snapshot coverage')
+    if '/Users/' in html or 'localhost' in html:
+        raise ValueError('Local machine reference in public page')
     output.mkdir(parents=True, exist_ok=True)
-    # The deploy workflow starts clean. Fail on unexpected preexisting files rather
-    # than accidentally publishing a previous real-data output directory.
-    allowed = {'index.html', '.nojekyll', 'demo'}
-    unexpected = {p.name for p in output.iterdir()} - allowed
-    if unexpected:
+    allowed = set(FILES) | {'.nojekyll', 'demo'}
+    if {p.name for p in output.iterdir()} - allowed:
         raise ValueError('Unexpected files in public output directory')
     demo = output / 'demo'
     if demo.exists():
@@ -36,9 +33,10 @@ def build(output):
             raise ValueError('Public demo cannot be a symlink')
         shutil.rmtree(demo)
     demo.mkdir()
-    for name in ['index.html', 'report.md', 'large_moves.csv', 'event_windows.csv', 'daily_returns.csv']:
-        shutil.copyfile(staging / name, demo / name)
-    shutil.copyfile(root / 'site/index.html', output / 'index.html')
+    # Keep the previously shared /demo/ URL working with the same NBIS case.
+    for name in FILES:
+        shutil.copyfile(source / name, output / name)
+        shutil.copyfile(source / name, demo / name)
     (output / '.nojekyll').write_text('')
     return output
 

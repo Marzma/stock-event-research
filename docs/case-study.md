@@ -27,7 +27,7 @@ These regression results refer to the private original inputs, not to the public
 
 In the original five-cut sample, NBIS rose on three announcement days and four twenty-day windows. Every twenty-day window contained at least one recorded overlapping event. These results describe association, not a policy effect. Initial searches across 118 rally dates did not constitute complete source review.
 
-The public demo uses two fictional tickers and fictional events so visitors can inspect the workflow without relying on paid data or mistaking incomplete news attribution for verified causes. Macro calendars are curated inputs; early closes, market-calendar validation, policy surprises and beta-adjusted abnormal returns remain outside the initial implementation.
+The public dashboard displays the original NBIS/QQQ case study and its recorded evidence, including incomplete-review states. Separate synthetic fixtures remain available for reproducible pipeline tests. Macro calendars are curated inputs; early closes, market-calendar validation, policy surprises and beta-adjusted abnormal returns remain outside the initial implementation.
 
 ## Reuse
 
