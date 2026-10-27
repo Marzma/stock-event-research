@@ -1,5 +1,13 @@
 # Stock Event Research
 
+[![Tests](https://github.com/Marzma/stock-event-research/actions/workflows/test.yml/badge.svg)](https://github.com/Marzma/stock-event-research/actions/workflows/test.yml)
+[![Portfolio](https://github.com/Marzma/stock-event-research/actions/workflows/pages.yml/badge.svg)](https://github.com/Marzma/stock-event-research/actions/workflows/pages.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+
+**[Live portfolio](https://marzma.github.io/stock-event-research/)** · **[Interactive synthetic demo](https://marzma.github.io/stock-event-research/demo/)** · **[Case study](docs/case-study.md)**
+
+A portfolio project by **Marz Ma**. Implementation and documentation were developed with AI assistance, with calculation checks and automated tests made explicit below.
+
 A reproducible, SQL-based research pipeline for configurable equities: download or import prices, detect large positive **and negative** moves, match news candidates, compare macro-event windows with a benchmark, and generate an English report and a portable dashboard.
 
 Built from a Nebius (NBIS) case study. The public repository contains **code and synthetic examples**, not the original downloaded price files, local database, passwords, or private analysis outputs.
@@ -112,7 +120,7 @@ event_id,date,title,change_bps,source_url
 
 **Analyze watchlist** supports manual runs from the Actions tab. Choose a tracked config under `examples/`. Add `ALPHAVANTAGE_API_KEY` as a repository **secret** for news; it is optional, and absent news is clearly labeled.
 
-Daily runs are **opt-in**: set repository variable `ENABLE_SCHEDULE=true`. The workflow is configured for **02:17 UTC Tuesday-Saturday**, generally after the previous US trading day and after the UTC date changes. GitHub schedules can be delayed; holidays can produce repeated snapshots. Downloads and artifacts follow provider entitlements and repository visibility. In this public repository, review data-sharing rights before enabling real-data artifacts. No generated results are committed and no Pages deployment occurs automatically.
+Daily runs are **opt-in**: set repository variable `ENABLE_SCHEDULE=true`. The workflow is configured for **02:17 UTC Tuesday-Saturday**, generally after the previous US trading day and after the UTC date changes. GitHub schedules can be delayed; holidays can produce repeated snapshots. Downloads and artifacts follow provider entitlements and repository visibility. In this public repository, review data-sharing rights before enabling real-data artifacts. No real-data results are committed. A separate Pages workflow deploys only the synthetic demo and portfolio on pushes to main.
 
 ## Optional MySQL
 
@@ -152,3 +160,17 @@ examples/         # synthetic fixtures and watchlist/calendar configs
 ```
 
 This is an initial research framework, not a trading strategy, complete news database or production data service. Provider coverage and source review remain part of the research workflow.
+
+## Open source and portfolio
+
+Code and documentation are licensed under [MIT](LICENSE), copyright 2026 Marz Ma. Third-party data, news and service access are not covered by this license.
+
+The [public portfolio](https://marzma.github.io/stock-event-research/) explains the problem, approach, validation and limitations; its embedded dashboard uses only synthetic fixtures. The public build does not need API keys.
+
+```bash
+python scripts/build_portfolio.py --output public
+```
+
+In repository Settings > Pages, choose **GitHub Actions** as the publishing source. `Publish portfolio` tests the project, builds the synthetic demo and publishes only the explicitly allowlisted public files. Real-data watchlist runs remain separate and opt-in.
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) for development and evidence standards.

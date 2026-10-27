@@ -16,3 +16,5 @@ artifacts/
 .pytest_cache/
 config.local.json
 
+
+public/
